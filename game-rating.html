@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Game Scorecard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1d;
+            color: #efefef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #25252b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 480px;
+            border: 2px solid #4e4e50;
+        }
+        /* Image Placeholder */
+        .game-header-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #66fcf1;
+            background-color: #000;
+        }
+        h2 {
+            text-align: center;
+            color: #66fcf1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 0 1.5rem 0;
+            border-bottom: 1px solid #4e4e50;
+            padding-bottom: 10px;
+        }
+        .criteria-group {
+            margin-bottom: 20px;
+        }
+        .criteria-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .label { font-weight: bold; font-size: 1.1rem; color: #66fcf1; }
+        .description { 
+            font-size: 0.85rem; 
+            color: #999; 
+            margin-top: 2px;
+            display: block;
+            width: 70%;
+        }
+        select {
+            background-color: #1a1a1d;
+            color: #66fcf1;
+            border: 1px solid #66fcf1;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 120px;
+        }
+        .result-area {
+            margin-top: 1.5rem;
+            text-align: center;
+            padding: 1rem;
+            background-color: #1a1a1d;
+            border-radius: 8px;
+            border: 2px solid #66fcf1;
+        }
+        #finalScore {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #66fcf1;
+            display: block;
+        }
+        .verdict-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="1.jpg" alt="Game Screenshot" class="game-header-img" onerror="this.style.display='none';">
+    
+    <h2>Final Verdict</h2>
+    
+    <div class="criteria-group">
+        <div class="criteria-header">
+            <span class="label">Nostalgia</span>
+            <select class="score" onchange="calculateScore()">
+                <option value="" selected disabled>Select...</option>
+                <option value="5">5/5 - Magical</option>
+                <option value="4">4/5 - Strong</option>
+                <option value="3">3/5 - Average</option>
+                <option value="2">2/5 - Faded</option>
+                <option value="1">1/5 - None</option>
+            </select>
+        </div>
+        <span class="description">How well does the game's "vibe" and music hold up today?</span>
+    </div>
+
+    <div class="criteria-group">
+        <div class="criteria-header">
+            <span class="label">Mechanics</span>
+            <select class="score" onchange="calculateScore()">
+                <option value="" selected disabled>Select...</option>
+                <option value="5">5/5 - Smooth</option>
+                <option value="4">4/5 - Decent</option>
+                <option value="3">3/5 - Clunky</option>
+                <option value="2">2/5 - Poor</option>
+                <option value="1">1/5 - Broken</option>
+            </select>
+        </div>
+        <span class="description">Are the controls and gameplay loops still fun or too dated?</span>
+    </div>
+
+    <div class="criteria-group">
+        <div class="criteria-header">
+            <span class="label">Visuals</span>
+            <select class="score" onchange="calculateScore()">
+                <option value="" selected disabled>Select...</option>
+                <option value="5">5/5 - Timeless</option>
+                <option value="4">4/5 - Great</option>
+                <option value="3">3/5 - Okay</option>
+                <option value="2">2/5 - Rough</option>
+                <option value="1">1/5 - Eyesore</option>
+            </select>
+        </div>
+        <span class="description">How does the art style look on modern high-res monitors?</span>
+    </div>
+
+    <div class="criteria-group">
+        <div class="criteria-header">
+            <span class="label">Win 11 Fix</span>
+            <select class="score" onchange="calculateScore()">
+                <option value="" selected disabled>Select...</option>
+                <option value="5">5/5 - Perfect</option>
+                <option value="4">4/5 - Simple</option>
+                <option value="3">3/5 - Fair</option>
+                <option value="2">2/5 - Hard</option>
+                <option value="1">1/5 - Brutal</option>
+            </select>
+        </div>
+        <span class="description">How easy was it to get the game running stable?</span>
+    </div>
+
+    <div class="criteria-group">
+        <div class="criteria-header">
+            <span class="label">Addiction</span>
+            <select class="score" onchange="calculateScore()">
+                <option value="" selected disabled>Select...</option>
+                <option value="5">5/5 - Infinite</option>
+                <option value="4">4/5 - High</option>
+                <option value="3">3/5 - Moderate</option>
+                <option value="2">2/5 - Low</option>
+                <option value="1">1/5 - Zero</option>
+            </select>
+        </div>
+        <span class="description">The "One More Hour" test. Is it hard to put down?</span>
+    </div>
+
+    <div class="result-area">
+        <span id="finalScore">--%</span>
+        <div id="verdict" class="verdict-text">Waiting for scores...</div>
+    </div>
+</div>
+
+<script>
+    function calculateScore() {
+        const scores = document.querySelectorAll('.score');
+        let total = 0;
+        let answered = 0;
+        
+        scores.forEach(s => {
+            if(s.value !== "") {
+                total += parseInt(s.value);
+                answered++;
+            }
+        });
+        
+        // Only calculate if all 5 are selected
+        if (answered === 5) {
+            const percentage = (total / 25) * 100;
+            const finalVal = Math.round(percentage);
+            document.getElementById('finalScore').innerText = finalVal + "%";
+
+            let verdict = "";
+            if (finalVal >= 90) verdict = "LEGENDARY STATUS";
+            else if (finalVal >= 75) verdict = "WORTH PLAYING";
+            else if (finalVal >= 55) verdict = "ONLY FOR FANS";
+            else verdict = "STAY AWAY";
+            
+            document.getElementById('verdict').innerText = verdict;
+        } else {
+            document.getElementById('finalScore').innerText = "--%";
+            document.getElementById('verdict').innerText = "Select all criteria";
+        }
+    }
+</script>
+
+</body>
+</html>
